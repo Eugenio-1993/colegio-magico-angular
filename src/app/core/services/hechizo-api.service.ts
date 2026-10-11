@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Hechizo } from '../../models/hechizo.model';
 
 // Servicio de acceso a /api/hechizos (los endpoints del Reto 4 del backend).
@@ -25,7 +25,8 @@ export class HechizoApiService {
   // ⚠️ El backend responde TEXTO ("Hechizo creado correctamente"), no JSON.
   // PISTA: mira cómo lo resuelve MagoApiService.crear() con responseType.
   crear(hechizo: Hechizo): Observable<string> {
-    // Escribe tu código aquí y borra la línea de abajo:
-    return of('');
+    // responseType: 'text' porque el backend responde un TEXTO ("Hechizo creado correctamente"),
+    // no un JSON. Sin esto Angular intenta hacer JSON.parse() del texto y lanza error.
+    return this.http.post(this.url, hechizo, { responseType: 'text' });
   }
 }
